@@ -44,10 +44,12 @@ class CountdownTimer(Text):
         self.is_running = False
         self.is_paused = False
 
-    def reset(self):
-        if not self.is_running:
-            self.value = format_seconds(self.seconds)
-            self.update()
+    def reset(self, new_seconds=None):
+        if new_seconds is not None:
+            self.seconds = new_seconds
+            self.value = format_seconds(new_seconds)
+        elif not self.is_running:
+            self.seconds = self.seconds
 
     def fetch_remaining_seconds(self):
         return self.seconds
