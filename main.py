@@ -1,5 +1,6 @@
 import flet as ft
 from countdown_timer import CountdownTimer
+from countdown_timer import format_seconds
 import os
 from math import pi
 
@@ -18,7 +19,6 @@ def main(page: ft.Page):
     page.theme = ft.Theme(color_scheme_seed="green")
     page.window_min_height = 1000
     page.window_min_width = 1000
-    page.window_full_screen = True
     page.window_center()
 
     def close_menu(e):
@@ -58,17 +58,31 @@ def main(page: ft.Page):
         )
     )
 
+    def update_session_duration(e):
+        timer.stop()
+        timer.reset()
+        timer.seconds = int(timer_setter.value)*60
+        timer.value = format_seconds(timer.seconds)
+        timer.update_async()
+
     timer_setter = ft.TextField(
-        width=45,
-        value=25
+        width=100,
+        value=25,
+        on_submit=update_session_duration,
     )
 
     def increment(e):
+        timer_setter.value = int(timer_setter.value)
         timer_setter.value += 5
+        if timer_setter.value > 240:
+            timer_setter.value = 240
         timer_setter.update()
 
     def decrement(e):
+        timer_setter.value = int(timer_setter.value)
         timer_setter.value -= 5
+        if timer_setter.value <= 0:
+            timer_setter.value = 5
         timer_setter.update()
 
     settings_menu = ft.AlertDialog(
@@ -96,8 +110,11 @@ def main(page: ft.Page):
                         ft.IconButton(icon=ft.icons.REMOVE, on_click=decrement)
                     ])
                 ])
-            ])
-        )
+            ]),  
+        ),
+        actions=[
+            ft.ElevatedButton(text="Save Changes", on_click=update_session_duration)
+        ]
     )
 
     def open_settings(e):
@@ -212,3 +229,5 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(target=main, assets_dir="assets")
+
+#TODO: Add a Progress Ring around the countdown
