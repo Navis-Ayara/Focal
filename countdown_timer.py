@@ -49,7 +49,7 @@ class CountdownTimer(Text):
             self.seconds = new_seconds
             self.value = format_seconds(new_seconds)
         elif not self.is_running:
-            self.seconds = self.seconds
+            pass
 
     def fetch_remaining_seconds(self):
         return self.seconds
