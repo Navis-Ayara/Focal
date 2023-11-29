@@ -1,6 +1,7 @@
 import flet as ft
 from countdown_timer import CountdownTimer
 from countdown_timer import format_seconds
+from countdown_progress import timer_progress
 import os
 import random
 from math import pi
@@ -223,8 +224,9 @@ def main(page: ft.Page):
                 ft.Row([
                     ft.Stack([
                         ft.Container(timer, alignment=ft.alignment.center),
+                        timer_progress
                     ], width=382, height=382)  
-                ], alignment=ft.MainAxisAlignment.CENTER),
+                ], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                 timer_controls
             ], spacing=40)
         ])
