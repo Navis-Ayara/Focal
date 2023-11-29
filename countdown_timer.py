@@ -12,8 +12,8 @@ def format_seconds(seconds):
 class CountdownTimer(Text):
     def __init__(self,):
         super().__init__()
+        self.original_seconds = 25*60
         self.seconds = 25*60
-        self.start_time = self.seconds
         self.is_running = False
         self.is_paused = False
         self.timer_thread = None
@@ -34,7 +34,7 @@ class CountdownTimer(Text):
                 time.sleep(1)
                 self.seconds -= 1
                 self.value = format_seconds(self.seconds)
-                timer_progress.value = self.seconds / self.start_time
+                timer_progress.value = (self.seconds / self.original_seconds)
                 timer_progress.update()
                 self.update()
 
@@ -50,6 +50,7 @@ class CountdownTimer(Text):
 
     def reset(self, new_seconds=None):
         if new_seconds is not None:
+            self.original_seconds = new_seconds
             self.seconds = new_seconds
             self.value = format_seconds(new_seconds)
         elif not self.is_running:
@@ -57,4 +58,3 @@ class CountdownTimer(Text):
 
     def fetch_remaining_seconds(self):
         return self.seconds
-
