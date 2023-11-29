@@ -1,6 +1,6 @@
 import time
 import threading
-from flet import Text
+from flet import Text, colors
 
 def format_seconds(seconds):
     minutes = seconds // 60
@@ -17,7 +17,7 @@ class CountdownTimer(Text):
         self.timer_thread = None
         self.value = format_seconds(self.seconds)
         self.size = 144
-        self.color = "#ffffff"
+        self.color = colors.WHITE
 
     def start(self):
         if not self.is_running:
