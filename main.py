@@ -6,11 +6,11 @@ import os
 import random
 from math import pi
 
-music = []
-with os.scandir("assets/music") as entries:
-    for entry in entries:
-        if entry.is_file():
-            music.append(entry.name)
+#music = []
+#with os.scandir("assets/music") as entries:
+#    for entry in entries:
+#        if entry.is_file():
+#            music.append(entry.name)
 
 images = []
 with os.scandir("assets/images") as entries:
@@ -29,10 +29,10 @@ def main(page: ft.Page):
     page.window_min_width = 1000
     page.window_center()
 
-    audio1 = ft.Audio(
-        src=f"/music/{random.choice(music)}", autoplay=False
-    )
-    page.overlay.append(audio1)
+    #audio1 = ft.Audio(
+    #    src=f"/music/{random.choice(music)}", autoplay=False
+    #)
+    #page.overlay.append(audio1)
 
     def close_menu(e):
         settings_menu.open = False
@@ -73,7 +73,7 @@ def main(page: ft.Page):
 
     def update_session_duration(e):
         timer.stop()
-        timer.reset()
+        timer.reset(int(timer_setter.value)*60)
         timer.seconds = int(timer_setter.value)*60
         timer.value = format_seconds(timer.seconds)
         timer.update()
@@ -150,7 +150,7 @@ def main(page: ft.Page):
 
     def start_countdown(e):
         timer.start()
-        audio1.play()
+        #audio1.play()
         start_btn.icon = ft.icons.STOP_ROUNDED
         start_btn.text = "Stop"
         start_btn.on_click = stop
@@ -164,13 +164,13 @@ def main(page: ft.Page):
 
     def reset(e):
         restart_btn.rotate -= pi*2
-        audio1.pause()
+        #audio1.pause()
         timer.reset(int(timer_setter.value*60))
         page.update()
 
     def stop(e):
         timer.stop()
-        audio1.pause()
+        #audio1.pause()
         start_btn.on_click=start_countdown
         start_btn.icon = None
         start_btn.text = "Start"
@@ -246,5 +246,3 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(target=main, assets_dir="assets")
-
-#TODO: Add a Progress Ring around the countdown
