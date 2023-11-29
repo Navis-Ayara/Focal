@@ -1,6 +1,7 @@
 import time
 import threading
 from flet import Text, colors
+from countdown_progress import timer_progress
 
 def format_seconds(seconds):
     minutes = seconds // 60
@@ -12,6 +13,7 @@ class CountdownTimer(Text):
     def __init__(self,):
         super().__init__()
         self.seconds = 25*60
+        self.start_time = self.seconds
         self.is_running = False
         self.is_paused = False
         self.timer_thread = None
@@ -32,6 +34,8 @@ class CountdownTimer(Text):
                 time.sleep(1)
                 self.seconds -= 1
                 self.value = format_seconds(self.seconds)
+                timer_progress.value = self.seconds / self.start_time
+                timer_progress.update()
                 self.update()
 
     def pause(self):
