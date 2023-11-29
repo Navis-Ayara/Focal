@@ -80,7 +80,8 @@ def main(page: ft.Page):
     timer_setter = ft.TextField(
         width=100,
         value=25,
-        on_submit=update_session_duration,
+        border=ft.InputBorder.UNDERLINE,
+        filled=True,
     )
 
     def increment(e):
@@ -102,7 +103,7 @@ def main(page: ft.Page):
         title=ft.Row([
             ft.IconButton(
                 icon=ft.icons.CLOSE, 
-                icon_color="#ffffff", 
+                icon_color=ft.colors.WHITE, 
                 icon_size=25,
                 on_click=close_menu
             ),
@@ -178,7 +179,7 @@ def main(page: ft.Page):
         icon=ft.icons.PAUSE_ROUNDED,
         icon_color=ft.colors.WHITE,
         style=ft.ButtonStyle(
-            side=ft.BorderSide(1.5, "#ffffff")
+            side=ft.BorderSide(1.5, ft.colors.WHITE)
         ),
         on_click=pause_coutdown
     )
@@ -188,7 +189,7 @@ def main(page: ft.Page):
         height=45,
         text="Start",
         style=ft.ButtonStyle(
-            bgcolor="#ffffff",
+            bgcolor=ft.colors.WHITE,
             color=ft.colors.BLACK
         ),
         on_click=start_countdown
@@ -198,7 +199,7 @@ def main(page: ft.Page):
         icon=ft.icons.RESTART_ALT_ROUNDED,  
         icon_color=ft.colors.WHITE,
         style=ft.ButtonStyle(
-            side=ft.BorderSide(1.5, "#ffffff")
+            side=ft.BorderSide(1.5, ft.colors.WHITE)
         ),
         rotate=0,
         animate_rotation=ft.Animation(500, ft.AnimationCurve.EASE_IN_OUT),
