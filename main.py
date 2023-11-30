@@ -6,11 +6,11 @@ import os
 import random
 from math import pi
 
-#music = []
-#with os.scandir("assets/music") as entries:
-#    for entry in entries:
-#        if entry.is_file():
-#            music.append(entry.name)
+music = []
+with os.scandir("assets/music") as entries:
+    for entry in entries:
+        if entry.is_file():
+            music.append(entry.name)
 
 images = []
 with os.scandir("assets/images") as entries:
@@ -29,10 +29,10 @@ def main(page: ft.Page):
     page.window_min_width = 1000
     page.window_center()
 
-    #audio1 = ft.Audio(
-    #    src=f"/music/{random.choice(music)}", autoplay=False
-    #)
-    #page.overlay.append(audio1)
+    sound = ft.Audio(
+        src=f"/music/{random.choice(music)}", autoplay=False
+    )
+    page.overlay.append(sound)
 
     def close_menu(e):
         settings_menu.open = False
@@ -57,6 +57,7 @@ def main(page: ft.Page):
             padding=0,
             expand=True,
             height=28,
+            blur=ft.Blur(10, 10, ft.BlurTileMode.REPEATED),
             content=ft.IconButton(
                 icon=ft.icons.CLOSE_SHARP,
                 icon_size=14,
@@ -74,7 +75,9 @@ def main(page: ft.Page):
     def update_session_duration(e):
         timer.stop()
         timer.reset(int(timer_setter.value)*60)
+        sound.pause()
         timer.seconds = int(timer_setter.value)*60
+        reset(e)
         timer.value = format_seconds(timer.seconds)
         timer.update()
 
@@ -150,7 +153,7 @@ def main(page: ft.Page):
 
     def start_countdown(e):
         timer.start()
-        #audio1.play()
+        sound.play()
         start_btn.icon = ft.icons.STOP_ROUNDED
         start_btn.text = "Stop"
         start_btn.on_click = stop
@@ -164,13 +167,17 @@ def main(page: ft.Page):
 
     def reset(e):
         restart_btn.rotate -= pi*2
-        #audio1.pause()
+        sound.pause()
         timer.reset(int(timer_setter.value*60))
+        start_btn.on_click=start_countdown
+        start_btn.icon = None
+        start_btn.text = "Start"
+        timer.pause()
         page.update()
 
     def stop(e):
         timer.stop()
-        #audio1.pause()
+        sound.pause()
         start_btn.on_click=start_countdown
         start_btn.icon = None
         start_btn.text = "Start"
@@ -246,3 +253,5 @@ def main(page: ft.Page):
 
 if __name__ == "__main__":
     ft.app(target=main, assets_dir="assets")
+
+#TODO: Add background music player
