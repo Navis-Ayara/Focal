@@ -6,5 +6,5 @@ timer_progress = ProgressRing(
     bgcolor=colors.TRANSPARENT,
     color=colors.WHITE,
     stroke_width=10,
-    value=0
+    value=1
 )
