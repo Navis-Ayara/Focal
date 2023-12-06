@@ -233,20 +233,25 @@ def main(page: ft.Page):
                         ft.Container(timer, alignment=ft.alignment.center),
                         timer_progress
                     ], width=382, height=382)  
-                ], alignment=ft.MainAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                ], alignment=ft.Mai
+                       nAxisAlignment.CENTER, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                 timer_controls
             ], spacing=40)
         ])
     )
 
+    app_content = ft.Column([
+        app
+    ])
+
+    if page.platform.upper() == "WINDOWS":
+        app_content.insert(0, title_bar)
+
     app_container = ft.Container(
         expand=True,
         image_src="/images/Aerial Forest View.jpg",
         image_fit=ft.ImageFit.COVER,
-        content=ft.Column([
-            title_bar,
-            app
-        ])
+        content=app_content
     )
 
     page.add(app_container)
